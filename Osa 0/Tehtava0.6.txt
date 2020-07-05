@@ -1,0 +1,15 @@
+note over selain:
+Luodaan uusi note, lisätään se muistiinpanojen
+listaan, renderöidään muistiinpanot uudelleen, 
+lähetetään serverille tyyppitiedon kanssa.
+end note
+
+selain->palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note over palvelin:
+Lisätään uusi note JSONiin.
+end note
+palvelin-->selain: {"message":"note created"}
+
+note over selain:
+Console.log aktivoituu.
+end note
