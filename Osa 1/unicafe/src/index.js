@@ -11,10 +11,10 @@ const Button = ({ onClick, text }) => (
 
 const Avg = (props) => {
   let sum = 0;
-  let arrlenght = props.list.length;
+  let arrlenght = props.length;
   
-  for (var i=0; i < arrlenght; i++) {
-    sum += props.list[i];
+  for (let i=0; i < arrlenght; i++) {
+    sum += props[i];
   }
 
   return (
@@ -23,11 +23,23 @@ const Avg = (props) => {
 }
 
 const Pos = (props) => {
+  console.log(props)
+  console.log('hyvät', props.good)
+  console.log('pituus', props.all.length)
+
   return(
-  props.good/props.list.length*100
+  props.good/props.all.length*100 +'%'
   )
+  
+
 }
 
+
+const StatisticLine = (props) => {
+  return (
+    <p>{props.text} {props.value}</p>
+  )
+}
 
 
 const Statistics = (props) => {
@@ -40,13 +52,12 @@ const Statistics = (props) => {
   }
   return (
     <div>
-    <h2>Statistics:</h2>
-    <p>Good: {props.good}</p>
-    <p>Neutral: {props.neutral} </p> 
-    <p>Bad: {props.bad}</p> 
-    <p>All: {props.all.length}</p>
-    <p>Average: <Avg list={props.all}/></p>
-    <p>Positive: <Pos list={props.all} good={props.good}/> %</p>
+    <StatisticLine text="Good: " value = {props.good}/>
+    <StatisticLine text="Neutral: " value = {props.neutral}/>
+    <StatisticLine text="Bad: " value = {props.bad}/>
+    <StatisticLine text="All: " value = {props.all.length}/>
+    <StatisticLine text="Average: " value = {Avg(props.all)}/>
+    <StatisticLine text="Positive: " value = {Pos(props)}/>
     </div>
   )
 }
@@ -79,6 +90,7 @@ const App = () => {
       <Button onClick={handleGoodClick} text='good' />
       <Button onClick={handleNeutralClick} text='neutral' />
       <Button onClick={handleBadClick} text='bad' />
+      <h2>Statistics:</h2>
       <Statistics good={good} neutral={neutral} bad={bad} all={allReviews}/>
       
     </div>
