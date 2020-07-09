@@ -30,14 +30,19 @@ const Pos = (props) => {
   return(
   props.good/props.all.length*100 +'%'
   )
-  
-
 }
 
 
 const StatisticLine = (props) => {
   return (
-    <p>{props.text} {props.value}</p>
+      <tr>
+        <td>
+        {props.text}
+        </td>
+        <td>
+        {props.value}
+        </td>
+        </tr>
   )
 }
 
@@ -51,14 +56,16 @@ const Statistics = (props) => {
     )
   }
   return (
-    <div>
-    <StatisticLine text="Good: " value = {props.good}/>
-    <StatisticLine text="Neutral: " value = {props.neutral}/>
-    <StatisticLine text="Bad: " value = {props.bad}/>
-    <StatisticLine text="All: " value = {props.all.length}/>
-    <StatisticLine text="Average: " value = {Avg(props.all)}/>
-    <StatisticLine text="Positive: " value = {Pos(props)}/>
-    </div>
+<table>
+      <tbody>
+      <StatisticLine text="Good: " value = {props.good}/>
+      <StatisticLine text="Neutral: " value = {props.neutral}/>
+      <StatisticLine text="Bad: " value = {props.bad}/>
+      <StatisticLine text="All: " value = {props.all.length}/>
+      <StatisticLine text="Average: " value = {Avg(props.all)}/>
+      <StatisticLine text="Positive: " value = {Pos(props)}/>
+      </tbody>
+    </table>
   )
 }
 
