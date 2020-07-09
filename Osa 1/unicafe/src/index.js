@@ -11,14 +11,14 @@ const Button = ({ onClick, text }) => (
 
 const Avg = (props) => {
   let sum = 0;
-  let arrlenght = props.length;
+  let arrlength = props.length;
   
-  for (let i=0; i < arrlenght; i++) {
+  for (let i=0; i < arrlength; i++) {
     sum += props[i];
   }
 
   return (
-    sum/arrlenght
+    sum/arrlength
   )
 }
 
