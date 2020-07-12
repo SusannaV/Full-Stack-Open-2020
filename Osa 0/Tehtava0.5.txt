@@ -7,7 +7,7 @@ palvelin-->selain: main.js
 
 
 note over selain:
-Selain alkaa suorittaa js-koodia
+Selain alkaa suorittaa js-koodia,
 joka pyytää JSON-datan palvelimelta.
 (Open & send)
 end note
