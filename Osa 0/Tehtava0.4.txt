@@ -22,6 +22,6 @@ palvelin-->selain: [{ content: "Sisältö" }, ...]
 
 note over selain:
 Päivittynyt json.
-selain suorittaa tapahtumankäsittelijän
+Selain suorittaa tapahtumankäsittelijän
 joka renderöi muistiinpanot näytölle
 end note
