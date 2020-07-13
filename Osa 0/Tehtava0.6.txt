@@ -12,4 +12,4 @@ palvelin-->selain: {"message":"note created"}
 
 note over selain:
 Console.log aktivoituu.
-end note
+end note 
