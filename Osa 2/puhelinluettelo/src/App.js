@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Person from "./Person";
+import Person from "./components/Person";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -15,7 +15,7 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault();
 
-    if (persons.find((p) => p.name === newName)) {
+    if (persons.find((p) => p.name.toUpperCase() === newName.toUpperCase())) {
       window.alert(`${newName} is already added to phonebook`);
     } else {
       const noteObject = {
@@ -42,7 +42,9 @@ const App = () => {
   const numbersToShow =
     newSearch === ""
       ? persons
-      : persons.filter((peep) => peep.name.includes(newSearch));
+      : persons.filter((peep) =>
+          peep.name.toUpperCase().includes(newSearch.toUpperCase())
+        );
 
   return (
     <div>
