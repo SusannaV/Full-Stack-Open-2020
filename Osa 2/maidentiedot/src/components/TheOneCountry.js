@@ -3,7 +3,7 @@ import React from "react";
 const Addimage = ({ flag }) => {
   return (
     <div>
-      <img src={flag} alt="flag of the country" width="30%" height="30%" />
+      <img src={flag} alt="flag of the country" height="200" />
     </div>
   );
 };

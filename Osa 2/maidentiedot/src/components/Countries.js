@@ -1,5 +1,4 @@
 import React from "react";
-import Country from "./Country";
 import TheOneCountry from "./TheOneCountry";
 
 const Countries = (props) => {
@@ -20,7 +19,19 @@ const Countries = (props) => {
       </div>
     );
   }
+  const Button = ({ onClick, text }) => (
+    <button onClick={onClick}>{text}</button>
+  );
 
+  const HandleClick = (props) => {};
+  const Country = ({ country }) => {
+    return (
+      <div>
+        {country.name}
+        <Button onClick={HandleClick} text="Show" />
+      </div>
+    );
+  };
   if (list.length >= 2 && list.length <= 10) {
     return (
       <div>
