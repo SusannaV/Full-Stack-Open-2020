@@ -3,4 +3,5 @@ Palautusrepositorio Full Stack Mooc 2020 -kurssille
 
 - Osa 0
 - Osa 1
-- Osa 2 10,5
+- Osa 2 10,5 +2 (2.13 tehty)
+ 
