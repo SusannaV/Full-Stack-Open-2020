@@ -15,15 +15,28 @@ const App = () => {
     });
   }, []);
 
+  const countriesToShow =
+  newSearch === ""
+      ? countries
+      : countries.filter((land) =>
+          land.name.toUpperCase().includes(newSearch.toUpperCase())
+        );
+  
+
   const handleSearch = (event) => {
+    event.preventDefault()
     setNewSearch(event.target.value);
   };
 
+  const handleClick = (props) => (
+     setNewSearch(props)
+ );
+  
   return (
     <div>
       <h1>REST Countries</h1>
-      <Filter newSearch={newSearch} handleSearch={handleSearch} />
-      <Countries search={newSearch} countries={countries} />
+      <Filter newSearch={newSearch} handleSearch={handleSearch}/>
+      <Countries countries={countriesToShow} handleClick={handleClick}/>
     </div>
   );
 };
