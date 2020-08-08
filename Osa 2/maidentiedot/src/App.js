@@ -8,9 +8,9 @@ const App = () => {
   const [newSearch, setNewSearch] = useState("");
 
   useEffect(() => {
-    console.log("data fetching");
+    console.log("data fetching (countries)");
     axios.get("https://restcountries.eu/rest/v2/all").then((response) => {
-      console.log("promise fulfilled");
+      console.log("promise fulfilled (countries)");
       setCountries(response.data);
     });
   }, []);

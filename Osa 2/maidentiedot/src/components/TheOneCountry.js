@@ -1,4 +1,6 @@
 import React from "react";
+import Weather from "./Weather";
+
 
 const Addimage = ({ flag }) => {
   return (
@@ -8,7 +10,10 @@ const Addimage = ({ flag }) => {
   );
 };
 
+
+
 const TheOneCountry = ({ country }) => {
+console.log('TheOne propsit= ', country.capital)
   return (
     <div>
       <h2>{country.name}</h2>
@@ -21,8 +26,12 @@ const TheOneCountry = ({ country }) => {
         ))}
       </ul>
       <Addimage flag={country.flag} />
+      <Weather location={country.capital}/>
     </div>
   );
+
+ 
 };
 
 export default TheOneCountry;
+

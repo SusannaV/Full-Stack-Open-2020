@@ -2,7 +2,6 @@ import React from "react";
 import TheOneCountry from "./TheOneCountry";
 
 const Countries = (props) => {
-
  const Button = ({handleClick}) => (
   <button onClick={handleClick}>Show</button>
 );
