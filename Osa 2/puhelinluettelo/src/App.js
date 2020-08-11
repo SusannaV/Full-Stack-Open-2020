@@ -26,7 +26,6 @@ const App = () => {
   };
   const handleSearch = (event) => {
     setNewSearch(event.target.value);
-    console.log(newSearch);
   };
 
   return (
