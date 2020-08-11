@@ -2,32 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const Weather  = ({location}) => {
-
-console.log('Weather propsit ' + location)
 const [weather, setWeather] = useState({});
 const [loaded, setLoaded] = useState(false);
 
-const api_key = process.env.REACT_APP_API_KEY
-
-const params = {
-  access_key: api_key,
-  query: {location}
-}
-
 useEffect(() => {
+  const access_key= process.env.REACT_APP_API_KEY
+
   axios
-    .get('http://api.weatherstack.com/current', {params})
+    .get('http://api.weatherstack.com/current'
+    .concat('?access_key='.concat(access_key))
+    .concat('&query='.concat(location))
+    
+    )
     .then(response => {
       const apiResponse = response.data;
-      console.log('useEffect', response.data)
       setWeather(apiResponse)
       setLoaded(true)
-      console.log(`Current temperature in ${apiResponse.location.name} is ${apiResponse.current.temperature}℃`) 
 }).catch(error => {
   console.log(error);
 })
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+}, [location]);
 
 const Addimage = ({ image }) => {
   return (
@@ -44,7 +38,6 @@ if (!loaded){
   )
 }
   return (
-    console.log('returning weather:', weather),
       <>
       <h3>
           Weather in {location}

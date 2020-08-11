@@ -13,7 +13,6 @@ const Addimage = ({ flag }) => {
 
 
 const TheOneCountry = ({ country }) => {
-console.log('TheOne propsit= ', country.capital)
   return (
     <div>
       <h2>{country.name}</h2>
