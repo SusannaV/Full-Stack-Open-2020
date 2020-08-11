@@ -1,5 +1,6 @@
 import React from "react";
-import axios from "axios";
+import personservice from "../services/personservices";
+
 
 const PersonForm = (props) => {
   const addPerson = (event) => {
@@ -17,10 +18,11 @@ const PersonForm = (props) => {
         number: props.number,
       };
       
-      axios
-    .post('http://localhost:3001/persons', noteObject)
-    .then(response => {
-      props.personSetter(props.persons.concat(noteObject));
+
+      personservice
+      .create(noteObject)
+      .then(newPerson => {
+      props.personSetter(props.persons.concat(newPerson));
     })
     }
     props.nameSetter("");

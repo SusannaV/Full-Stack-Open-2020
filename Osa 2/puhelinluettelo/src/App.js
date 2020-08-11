@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
-import axios from "axios";
+import personservice from "./services/personservices";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,10 +11,11 @@ const App = () => {
   const [newSearch, setNewSearch] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      setPersons(response.data);
-    });
+    personservice
+    .getAll()
+    .then(personToBeAdded => {
+      setPersons(personToBeAdded);
+    })
   }, []);
   console.log("render", persons.length, "persons");
 
