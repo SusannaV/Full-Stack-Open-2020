@@ -11,6 +11,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [okMessage, setokMessage] = useState(null);
+
 
   useEffect(() => {
     personservice
@@ -36,6 +38,17 @@ const App = () => {
       return null
     }
     return (
+      <div className="notification">
+        {message}
+      </div>
+    )
+  }
+
+  const Errormessagehandler = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+    return (
       <div className="error">
         {message}
       </div>
@@ -53,9 +66,9 @@ const App = () => {
       .catch(error => {
         setErrorMessage("Couldn't remove from database")
       })
-      setErrorMessage(`Deleted ${props.dude.name}`)
+      setokMessage(`Deleted ${props.dude.name}`)
       setTimeout(() => {
-        setErrorMessage(null)
+        setokMessage(null)
       }, 5000)
     }
   }
@@ -64,7 +77,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={errorMessage} />
+      <Notification message={okMessage} />
+      <Errormessagehandler message={errorMessage} />
       <Filter newSearch={newSearch} handleSearch={handleSearch} />
 
       <h2>Add a new number</h2>
@@ -78,6 +92,7 @@ const App = () => {
         nameSetter={setNewName}
         numberSetter={setNewNumber}
         errorSetter={setErrorMessage}
+        okSetter={setokMessage}
       />
 
       <h2>Numbers</h2>
