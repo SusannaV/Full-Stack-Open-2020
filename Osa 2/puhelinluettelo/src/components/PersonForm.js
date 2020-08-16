@@ -6,12 +6,29 @@ const PersonForm = (props) => {
   const addPerson = (event) => {
     event.preventDefault();
 
+
+    const existing = props.persons.find((p) => p.name.toUpperCase() === props.name.toUpperCase());
+
     if (
-      props.persons.find(
-        (p) => p.name.toUpperCase() === props.name.toUpperCase()
-      )
+      existing
     ) {
-      window.alert(`${props.name} is already added to phonebook`);
+      if(window.confirm(`${props.name} is already added to phonebook, pelace the old number with a new one?`)){
+        const changedPerson = {...existing, number: props.number}
+
+        personservice
+          .modifyPerson (existing.id, changedPerson)
+          .then(returnedPerson => {
+            props.personSetter(props.persons.map(person => person.id !== existing.id ? person : returnedPerson))
+          }
+            
+       )
+          .catch(error => {
+            alert(
+              `Couldn't replace in the database`
+            )
+          })
+
+      }
     } else {
       const noteObject = {
         name: props.name,

@@ -42,7 +42,6 @@ const App = () => {
           `Couldn't remove from database`
         )
       })
-      console.log('persons', {persons})
     }
   }
   

@@ -6,9 +6,6 @@ const Person = (props) => {
     <button onClick={handleClick}>Delete</button>
   );
 
-  
-
-console.log('Person props', props)
   return (
     <p>
       {props.dude.name} {props.dude.number}
