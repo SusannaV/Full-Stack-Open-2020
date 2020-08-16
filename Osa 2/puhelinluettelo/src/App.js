@@ -29,6 +29,24 @@ const App = () => {
     setNewSearch(event.target.value);
   };
 
+
+  const handleDelete = (props) => {
+    if(window.confirm(`Delete ${props.dude.name}`)){
+      personservice
+      .deletePerson(props.dude.id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== props.dude.id))
+    })
+      .catch(error => {
+        alert(
+          `Couldn't remove from database`
+        )
+      })
+      console.log('persons', {persons})
+    }
+  }
+  
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -47,9 +65,16 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons search={newSearch} persons={persons} />
+      <Persons search={newSearch} persons={persons} handleDelete={handleDelete}/>
     </div>
   );
 };
 
 export default App;
+
+//*************************************************************** */
+//
+// jatka tästä seuraavaksi:
+//pitää keksiä keino rerenderöidä lista poistamisen jälkeen
+//
+//*************************************************************** */

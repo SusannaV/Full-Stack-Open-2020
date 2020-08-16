@@ -1,9 +1,18 @@
 import React from "react";
 
-const Person = ({ dude }) => {
+const Person = (props) => {
+  
+  const Button = ({handleClick}) => (
+    <button onClick={handleClick}>Delete</button>
+  );
+
+  
+
+console.log('Person props', props)
   return (
     <p>
-      {dude.name} {dude.number}
+      {props.dude.name} {props.dude.number}
+      <Button handleClick={() => props.handleDelete(props)}/>
     </p>
   );
 };
