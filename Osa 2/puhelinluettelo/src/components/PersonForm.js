@@ -20,14 +20,17 @@ const PersonForm = (props) => {
           .then(returnedPerson => {
             props.personSetter(props.persons.map(person => person.id !== existing.id ? person : returnedPerson))
           }
-            
+          
        )
           .catch(error => {
             alert(
               `Couldn't replace in the database`
             )
           })
-
+          props.errorSetter(`Replaced the number for ${props.name}`)
+          setTimeout(() => {
+            props.errorSetter(null)
+          }, 5000)
       }
     } else {
       const noteObject = {
@@ -41,9 +44,14 @@ const PersonForm = (props) => {
       .then(newPerson => {
       props.personSetter(props.persons.concat(newPerson));
     })
+    props.errorSetter(`Added ${props.name}`)
+    setTimeout(() => {
+      props.errorSetter(null)
+    }, 5000)
     }
     props.nameSetter("");
     props.numberSetter("");
+    
   };
 
   return (

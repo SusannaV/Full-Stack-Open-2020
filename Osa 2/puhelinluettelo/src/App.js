@@ -3,12 +3,14 @@ import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import personservice from "./services/personservices";
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newSearch, setNewSearch] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     personservice
@@ -29,6 +31,17 @@ const App = () => {
     setNewSearch(event.target.value);
   };
 
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+    return (
+      <div className="error">
+        {message}
+      </div>
+    )
+  }
+
 
   const handleDelete = (props) => {
     if(window.confirm(`Delete ${props.dude.name}`)){
@@ -38,10 +51,12 @@ const App = () => {
         setPersons(persons.filter(person => person.id !== props.dude.id))
     })
       .catch(error => {
-        alert(
-          `Couldn't remove from database`
-        )
+        setErrorMessage("Couldn't remove from database")
       })
+      setErrorMessage(`Deleted ${props.dude.name}`)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
   
@@ -49,6 +64,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter newSearch={newSearch} handleSearch={handleSearch} />
 
       <h2>Add a new number</h2>
@@ -61,6 +77,7 @@ const App = () => {
         personSetter={setPersons}
         nameSetter={setNewName}
         numberSetter={setNewNumber}
+        errorSetter={setErrorMessage}
       />
 
       <h2>Numbers</h2>
@@ -70,10 +87,3 @@ const App = () => {
 };
 
 export default App;
-
-//*************************************************************** */
-//
-// jatka tästä seuraavaksi:
-//pitää keksiä keino rerenderöidä lista poistamisen jälkeen
-//
-//*************************************************************** */
