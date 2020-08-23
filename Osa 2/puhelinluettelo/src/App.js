@@ -13,7 +13,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [okMessage, setokMessage] = useState(null);
 
-
   useEffect(() => {
     personservice
     .getAll()
@@ -55,7 +54,6 @@ const App = () => {
     )
   }
 
-
   const handleDelete = (props) => {
     if(window.confirm(`Delete ${props.dude.name}`)){
       personservice
@@ -73,7 +71,6 @@ const App = () => {
     }
   }
   
-
   return (
     <div>
       <h2>Phonebook</h2>

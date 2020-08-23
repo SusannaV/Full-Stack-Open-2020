@@ -3,9 +3,11 @@ import personservice from "../services/personservices";
 
 
 const PersonForm = (props) => {
-  
   const addPerson = (event) => {
     event.preventDefault();
+    if (props.name===""){
+      return;
+    }
     const existing = props.persons.find((p) => p.name.toUpperCase() === props.name.toUpperCase());
 
     if (existing) {
@@ -40,7 +42,7 @@ const PersonForm = (props) => {
       props.okSetter(`Added ${props.name}`)
       setTimeout(() => {
       props.okSetter(null)
-    }, 5000)
+      }, 5000)
     }
     props.nameSetter("");
     props.numberSetter("");

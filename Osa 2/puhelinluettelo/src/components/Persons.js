@@ -8,7 +8,6 @@ const Persons = (props) => {
       : props.persons.filter((peep) =>
           peep.name.toUpperCase().includes(props.search.toUpperCase())
         );
-   
 
   return (
     <div>
