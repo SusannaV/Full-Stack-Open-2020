@@ -26,7 +26,7 @@ const PersonForm = (props) => {
           .catch(error => {
             props.errorSetter(`Information of ${props.name} has already been removed from the server`)
             setTimeout(() => {
-              props.okSetter(null)
+              props.errorSetter(null)
             }, 5000)
           })     
       }
@@ -38,11 +38,19 @@ const PersonForm = (props) => {
       .create(noteObject)
       .then(newPerson => {
         props.personSetter(props.persons.concat(newPerson));
+        props.okSetter(`Added ${props.name}`)
+        setTimeout(() => {
+        props.okSetter(null)
+        }, 5000)
         })
-      props.okSetter(`Added ${props.name}`)
-      setTimeout(() => {
-      props.okSetter(null)
-      }, 5000)
+        .catch(error => {
+          console.log (error.response.data)
+          props.errorSetter(JSON.stringify(error.response.data.error))
+          setTimeout(() => {
+            props.errorSetter(null)
+          }, 5000)
+          console.log(error.response.data)
+        })
     }
     props.nameSetter("");
     props.numberSetter("");
