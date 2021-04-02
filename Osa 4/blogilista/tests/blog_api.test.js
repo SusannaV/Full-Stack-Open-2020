@@ -49,4 +49,10 @@ afterAll(() => {
 })
 
 
+test('The blogs have an "id"-field', async () =>{
+  const response = await api.get('/api/blogs');
+  expect(response.body[0].id).toBeDefined();
+})
+
+
 //tämän tiedoston testit saa suoritettua komennolla npm test -- tests/blog_api.test.js
