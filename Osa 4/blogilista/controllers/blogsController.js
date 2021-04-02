@@ -1,13 +1,11 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
-  blogsRouter.get('/', (request, response, next) => {
+  blogsRouter.get('/', async (request, response, next) => {
     console.log("You summoned?")
-    Blog
-      .find({})
-      .then(blogs => {
-        response.json(blogs)
-      })
+    //find on Mongoosen oma query, älä hämmenny
+    const blogs = await Blog.find({});
+    response.json(blogs.map(blog => blog.toJSON()))
   })
 
   blogsRouter.post('/', (request, response, next) => {

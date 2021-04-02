@@ -116,3 +116,23 @@ describe("favorite blog", () => {
     });
   });
 });
+
+
+// 4.6 jatkuu tästä
+//
+// describe("most blogs by", () => {
+//   test('when list has multiple blog equals "Robert C. Martin"', () => {
+//     const result = listHelper.mostBlogs(blogs);
+//     expect(result).toEqual({
+//       author: "Robert C. Martin",
+//       blogs: 3,
+//     });
+//   });
+// });
+
+// test("testtally", () => {
+//   const blogs = [];
+
+//   const result = listHelper.thisIsATest(blogs);
+//   expect(result).toBe(1);
+// });
