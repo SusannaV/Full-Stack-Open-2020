@@ -44,10 +44,6 @@ test('there are 3 blogs that are returned as json', async () => {
   expect(response.body).toHaveLength(initialBlogs.length);
 })
 
-afterAll(() => {
-  mongoose.connection.close()
-})
-
 
 test('The blogs have an "id"-field', async () =>{
   const response = await api.get('/api/blogs');
@@ -55,4 +51,29 @@ test('The blogs have an "id"-field', async () =>{
 })
 
 
+test('New blogs can be posted', async () =>{
+  const newBlog =  {
+    "title": "Blog about coffee",
+    "author": "Barista B",
+    "url": "www.coffeeforlife.blog",
+    "likes": 5
+};
+
+await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(201)
+  .expect('Content-Type', /application\/json/);
+
+
+  const response = await api.get('/api/blogs');
+  const titles = response.body.map(r => r.title);
+  expect(response.body).toHaveLength(initialBlogs.length+1)
+  expect(titles).toContain(
+    "Blog about coffee");
+})
+
+afterAll(() => {
+  mongoose.connection.close()
+})
 //tämän tiedoston testit saa suoritettua komennolla npm test -- tests/blog_api.test.js

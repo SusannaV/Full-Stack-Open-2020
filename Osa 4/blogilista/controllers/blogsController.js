@@ -8,14 +8,16 @@ const Blog = require('../models/blog')
     response.json(blogs.map(blog => blog.toJSON()))
   })
 
-  blogsRouter.post('/', (request, response, next) => {
-    const blog = new Blog(request.body)
-  
-    blog
-      .save()
-      .then(result => {
-        response.status(201).json(result)
-      }) 
+  blogsRouter.post('/', async (request, response, next) => {
+    try{
+      const blog = new Blog(request.body)
+      const result = await blog.save()
+      response.status(201);
+      response.json(result)
+    }
+    catch (error){
+      return next(error)
+    } 
   })
 
   module.exports = blogsRouter
