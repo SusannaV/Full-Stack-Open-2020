@@ -9,8 +9,16 @@ const Blog = require('../models/blog')
   })
 
   blogsRouter.post('/', async (request, response, next) => {
+    const body = request.body
+
     try{
-      const blog = new Blog(request.body)
+      const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes === undefined ? 0 : body.likes
+      })
+
       const result = await blog.save()
       response.status(201);
       response.json(result)

@@ -73,6 +73,26 @@ await api
     "Blog about coffee");
 })
 
+test('If new blog has no likes, it is set to 0 4.11', async () =>{
+  const newBlog =  {
+    "title": "This is an unpopular blog",
+    "author": "Steve",
+    "url": "www.stevesblogaboutlifetheuniverseandeverything.blogspot.com"
+};
+
+await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(201)
+  .expect('Content-Type', /application\/json/);
+
+
+  const response = await api.get('/api/blogs');
+  expect(response.body[3].likes).toBe(0);
+})
+
+
+
 afterAll(() => {
   mongoose.connection.close()
 })
