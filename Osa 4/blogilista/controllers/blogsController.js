@@ -28,4 +28,15 @@ const Blog = require('../models/blog')
     } 
   })
 
+  blogsRouter.delete('/:id', async(request, response, next) => {
+    try{
+      await Blog.findByIdAndRemove(request.params.id)
+      response.status(204).end()
+    }
+    catch (error){
+      return next(error)
+    }
+  })
+
+
   module.exports = blogsRouter
