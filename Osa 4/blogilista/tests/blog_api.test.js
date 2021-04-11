@@ -121,7 +121,7 @@ describe('post method', () =>{
 
 
 describe('delete method', () => {
-test('A blog can be removed', async () => {
+test('A blog can be removed - 4.13', async () => {
   const blogs = await api.get('/api/blogs');
   const blogToDelete = blogs.body[0];
 
@@ -133,15 +133,35 @@ test('A blog can be removed', async () => {
     expect(response.body).toHaveLength(initialBlogs.length-1);
     expect(response.body[0].title).toBe('S3cond Bl0g!');
 })
-
-
 })
 
-
+describe('put method', () => {
+  test('A blog can be updated - 4.14', async () => {
+    const blogs = await api.get('/api/blogs');
+    const blogToUpdate = blogs.body[1];
+    const newNoteData =  {
+      title: 'Second Blog - a new refined blog!',
+      author: 'Writer 2',
+      url: 'mysecondblog.bloglist.org',
+      likes: 2
+    }
+  
+    await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(newNoteData)
+    .expect(200)
+  
+    const response = await api.get('/api/blogs');
+      expect(response.body).toHaveLength(initialBlogs.length);
+      expect(response.body[1].title).toBe('Second Blog - a new refined blog!');
+  })
+  })
 
 afterAll(() => {
   mongoose.connection.close()
 })
 //tämän tiedoston testit saa suoritettua komennolla npm test -- tests/blog_api.test.js
-
-// `--detectOpenHandles
+//kunkin verbin testit voi suorittaa kommennolla
+// npm test -- -t 'delete'
+// npm test -- -t 'post'
+// npm test -- -t 'get'
