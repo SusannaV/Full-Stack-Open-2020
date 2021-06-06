@@ -121,12 +121,24 @@ describe("favorite blog", () => {
 
 // 4.6 jatkuu tästä
 //
-describe('testiblogi most blogs by', () => {
+describe('most blogs by', () => {
   test('when list has multiple blog equals "Robert C. Martin"', () => {
     const result = listHelper.mostBlogs(blogs);
     expect(result).toEqual({
       author: "Robert C. Martin",
       blogs: 3,
+    });
+  });
+});
+
+// 4.7 jatkuu tästä
+//
+describe('most likes', () => {
+  test('when list has multiple blog equals "Edsger W. Dijkstra"', () => {
+    const result = listHelper.mostLikes(blogs);
+    expect(result).toEqual({
+      author: "Edsger W. Dijkstra",
+      likes: 17,
     });
   });
 });
