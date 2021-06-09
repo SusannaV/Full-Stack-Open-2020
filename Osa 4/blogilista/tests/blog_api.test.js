@@ -212,6 +212,92 @@ describe('put method', () => {
       const usersAtEnd = await listHelper.usersInDb()
       expect(usersAtEnd).toHaveLength(usersAtStart.length)
     })
+
+    
+    test('creation fails with proper statuscode and message if password is too short', async () => {
+      const usersAtStart = await listHelper.usersInDb()
+  
+      const newUser = {
+        username: 'user1',
+        name: 'Player 1',
+        password: '12',
+      }
+  
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+  
+      expect(result.body.error).toContain('Password must be at least 3 characters long')
+  
+      const usersAtEnd = await listHelper.usersInDb()
+      expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    })
+
+    test('creation fails with proper statuscode and message if username is too short', async () => {
+      const usersAtStart = await listHelper.usersInDb()
+  
+      const newUser = {
+        username: 'us',
+        name: 'Player 1',
+        password: '123',
+      }
+  
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+  
+      expect(result.body.error).toContain('is shorter than the minimum allowed length (3)')
+  
+      const usersAtEnd = await listHelper.usersInDb()
+      expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    })
+
+    test('creation fails with proper statuscode and message if there is no password', async () => {
+      const usersAtStart = await listHelper.usersInDb()
+  
+      const newUser = {
+        username: 'user2',
+        name: 'Player 1'
+      }
+  
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+  
+      expect(result.body.error).toContain('Password must be at least 3 characters long')
+  
+      const usersAtEnd = await listHelper.usersInDb()
+      expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    })
+
+    test('creation fails with proper statuscode and message if there is no username', async () => {
+      const usersAtStart = await listHelper.usersInDb()
+  
+      const newUser = {
+        name: 'Player 1',
+        password: '123',
+      }
+  
+      const result = await api
+        .post('/api/users')
+        .send(newUser)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+  
+      expect(result.body.error).toContain('Path `username` is required.')
+  
+      const usersAtEnd = await listHelper.usersInDb()
+      expect(usersAtEnd).toHaveLength(usersAtStart.length)
+    })
+
+
+
   })
 
 
