@@ -9,7 +9,7 @@ const password = process.argv[2]
 
 const mongoUrl  =
   `mongodb+srv://fullstackuser:${password}@blogilista.btj9r.mongodb.net/blogilista?retryWrites=true&w=majority`
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const blogSchema = mongoose.Schema({
     title: String,
