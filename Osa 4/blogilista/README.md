@@ -20,3 +20,4 @@ Kunkin verbin testit voi suorittaa kommennolla
 - `npm test -- -t 'post'`
 - `npm test -- -t 'get'`
 
+Testit käyttää Mongon projektia Full Stack 4
