@@ -9,8 +9,6 @@ const Blog = require('../models/blog')
 
   blogsRouter.post('/', async (request, response, next) => {
     const body = request.body
-
-    try{
       const blog = new Blog({
         title: body.title,
         author: body.author,
@@ -21,20 +19,11 @@ const Blog = require('../models/blog')
       const result = await blog.save()
       response.status(201);
       response.json(result)
-    }
-    catch (error){
-      return next(error)
-    } 
   })
 
   blogsRouter.delete('/:id', async(request, response, next) => {
-    try{
       await Blog.findByIdAndRemove(request.params.id)
       response.status(204).end()
-    }
-    catch (error){
-      return next(error)
-    }
   })
 
   blogsRouter.put('/:id', async (request, response, next) => {
@@ -46,14 +35,9 @@ const Blog = require('../models/blog')
       likes: body.likes === undefined ? 0 : body.likes
     }
 
-    try{
       const returnedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {new:true})
       response.status(200)
       response.json(returnedBlog)
-    }
-    catch (error){
-      return next(error)
-    }
   })
 
 
