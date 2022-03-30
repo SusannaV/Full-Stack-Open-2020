@@ -1,7 +1,8 @@
-const { last } = require('lodash')
+//const { last } = require('lodash')
 const _ = require('lodash')
 const User = require('../models/user')
 
+// eslint-disable-next-line no-unused-vars
 const dummy = (blogs) => {
   return 1
 }
