@@ -12,19 +12,19 @@ const mongoUrl  =
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const blogSchema = mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number
-  })
+  title: String,
+  author: String,
+  url: String,
+  likes: Number
+})
 
-  const Blog = mongoose.model('Blog', blogSchema)
+const Blog = mongoose.model('Blog', blogSchema)
 
 const blogi = new Blog({
-    title: "Title 123",
-    author: "Author Authoripants",
-    url: "www.url.com",
-    likes: 1
+  title: 'Title 123',
+  author: 'Author Authoripants',
+  url: 'www.url.com',
+  likes: 1
 })
 
 blogi.save().then(response => {

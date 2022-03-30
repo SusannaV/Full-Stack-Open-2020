@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 
-const mongoUrl = process.env.MONGODB_URI
+//const mongoUrl = process.env.MONGODB_URI
 
-  const blogSchema = mongoose.Schema({
-    title: {
-      type:String,
-      required: true},
-    author: String,
-    url:  {
-      type:String,
-      required: true},
-    likes: Number,
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  })
+const blogSchema = mongoose.Schema({
+  title: {
+    type:String,
+    required: true },
+  author: String,
+  url:  {
+    type:String,
+    required: true },
+  likes: Number,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+})
 
-  blogSchema.set('toJSON', {
+blogSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
