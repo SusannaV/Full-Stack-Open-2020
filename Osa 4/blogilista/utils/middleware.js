@@ -40,15 +40,7 @@ const tokenExtractor = (request, response, next) => {
     }
     return null
   }
-
   request.token = getTokenFrom(request)
-  // const token = getTokenFrom(request)
-  // console.log('Tämä on token ' + token)
-  // if (!token===null){
-  //   request.token=token
-  //   console.log('Tämä on se uusi lisäys' + request.token)
-  //   return request
-  // }
   next ()
 }
 
