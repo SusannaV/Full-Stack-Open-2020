@@ -1,0 +1,21 @@
+ POST http://localhost:3003/api/login HTTP/1.1
+ content-type: application/json
+
+ {
+    "username": "baristakisu",
+    "password": "salasana"
+}
+
+###
+
+ POST http://localhost:3003/api/blogs HTTP/1.1
+ content-type: application/json
+ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmlzdGFraXN1IiwiaWQiOiI2MjU4MjQ3YTAwN2JkMmQ4ZjllYmQwN2MiLCJpYXQiOjE2NTAwMjcwNjksImV4cCI6MTY1MDAzMDY2OX0.joHwais3aH5rDJjtRQlMcsEMW_WPxLSMzHnzua6cRL0
+ 
+ {
+    "title": "Blog about 123",
+    "author": "Barista J",
+    "url": "www.juiceforlife.blog",
+    "likes": 1,
+    "userId": "6258247a007bd2d8f9ebd07c"
+}

@@ -32,8 +32,29 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+const tokenExtractor = (request, response, next) => {
+  const getTokenFrom = request => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+      return authorization.substring(7)
+    }
+    return null
+  }
+
+  request.token = getTokenFrom(request)
+  // const token = getTokenFrom(request)
+  // console.log('Tämä on token ' + token)
+  // if (!token===null){
+  //   request.token=token
+  //   console.log('Tämä on se uusi lisäys' + request.token)
+  //   return request
+  // }
+  next ()
+}
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
-  errorHandler
+  errorHandler,
+  tokenExtractor
 }
