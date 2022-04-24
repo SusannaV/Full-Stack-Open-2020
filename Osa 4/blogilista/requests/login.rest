@@ -10,10 +10,10 @@
 
  POST http://localhost:3003/api/blogs HTTP/1.1
  content-type: application/json
- Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmlzdGFraXN1IiwiaWQiOiI2MjU4MjQ3YTAwN2JkMmQ4ZjllYmQwN2MiLCJpYXQiOjE2NTA0NDY1ODUsImV4cCI6MTY1MDQ1MDE4NX0.AGLR6OtLiv3nCZk2TWEnApNq5N8K15tFgVp4Wgtjyjs
+ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmlzdGFraXN1IiwiaWQiOiI2MjU4MjQ3YTAwN2JkMmQ4ZjllYmQwN2MiLCJpYXQiOjE2NTA4MDYwNjMsImV4cCI6MTY1MDgwOTY2M30.qG-H0qaOz1PY4Gy3eJmZUknMx9cgkci4Xsrv8xeUs8s
  
  {
-    "title": "Blog to delete2",
+    "title": "Blog to delete3",
     "author": "Barista J",
     "url": "www.juiceforlife.blog",
     "likes": 1,
@@ -25,7 +25,16 @@
 
  DELETE http://localhost:3003/api/blogs/625fd0025db92a76cf70b6c8 HTTP/1.1
  content-type: application/json
- Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmlzdGFraXN1IiwiaWQiOiI2MjU4MjQ3YTAwN2JkMmQ4ZjllYmQwN2MiLCJpYXQiOjE2NTA0NDY1ODUsImV4cCI6MTY1MDQ1MDE4NX0.AGLR6OtLiv3nCZk2TWEnApNq5N8K15tFgVp4Wgtjyjs
+ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJhcmlzdGFraXN1IiwiaWQiOiI2MjU4MjQ3YTAwN2JkMmQ4ZjllYmQwN2MiLCJpYXQiOjE2NTA4MDcxMTgsImV4cCI6MTY1MDgxMDcxOH0.YzriZHVIWGwtQRxIMZRwZfVz33YaexSfqyNyL6jBcd4
  
- {
+ {     
 }
+
+
+###
+
+GET http://localhost:3003/api/blogs HTTP/1.1
+
+###
+
+DELETE http://localhost:3003/api/users/6258247a007bd2d8f9ebd07c HTTP/1.1

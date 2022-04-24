@@ -1,16 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
-
-const findUserAndValidateToken = (request, response) => {
-  // eslint-disable-next-line no-undef
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!request.token || !decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid' })
-  }
-  return decodedToken.id
-}
+const { userExtractor } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
   //find on Mongoosen oma query, älä hämmenny
@@ -18,10 +8,9 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs.map(blog => blog.toJSON()))
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', userExtractor, async (request, response) => {
   const body = request.body
-  const userId = findUserAndValidateToken(request, response)
-  const user = await User.findById(userId)
+  const user = request.user
 
   const blog = new Blog({
     title: body.title,
@@ -37,11 +26,9 @@ blogsRouter.post('/', async (request, response) => {
   response.json(result)
 })
 
-blogsRouter.delete('/:id', async(request, response) => {
+blogsRouter.delete('/:id', userExtractor,  async(request, response) => {
   const blog = await Blog.findById(request.params.id)
-  // eslint-disable-next-line no-undef
-  const userId = findUserAndValidateToken(request, response)
-  const user = await User.findById(userId)
+  const user = request.user
   if ( blog.user._id.toString() !== user._id.toString() ){
     return response.status(403).json({ error: 'blog can only be deleted by the person who originally added it' })
   }
