@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-//const { response } = require('../app')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
@@ -29,6 +28,8 @@ const initialBlogs = [
   }
 ]
 
+let initialUserToken = null
+
 beforeEach(async () => {
   await Blog.deleteMany({})
   let blogObject = new Blog(initialBlogs[0])
@@ -37,7 +38,27 @@ beforeEach(async () => {
   await blogObject.save()
   blogObject = new Blog(initialBlogs[2])
   await blogObject.save()
+
+  await User.deleteMany({})
+
+  const passwordHash = await bcrypt.hash('hullunsalainensalasana', 10)
+  const initialUser = new User(
+    {
+      username: 'TestiT',
+      passwordHash: passwordHash
+    })
+  await initialUser.save()
+
+  const response = await api
+    .post('/api/login/')
+    .send({
+      username: 'TestiT',
+      password: 'hullunsalainensalasana'
+    })
+
+  initialUserToken = response.body.token
 })
+
 describe('get method', () => {
   test('there are 3 blogs that are returned as json - 4.8', async () => {
     const response = await api.get('/api/blogs')
@@ -55,14 +76,17 @@ describe('get method', () => {
 
 describe('post method', () => {
   test('New blogs can be posted - 4.10', async () => {
+
     const newBlog =  {
-      'title': 'Blog about coffee',
+      'title': 'Blog about testing',
       'author': 'Barista B',
-      'url': 'www.coffeeforlife.blog',
+      'url': 'www.testingforlife.blog',
       'likes': 5
     }
+
     await api
       .post('/api/blogs')
+      .set('Authorization', 'bearer '+ initialUserToken)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -70,7 +94,7 @@ describe('post method', () => {
     const titles = response.body.map(r => r.title)
     expect(response.body).toHaveLength(initialBlogs.length+1)
     expect(titles).toContain(
-      'Blog about coffee')
+      'Blog about testing')
   })
 
 
@@ -82,6 +106,7 @@ describe('post method', () => {
     }
     await api
       .post('/api/blogs')
+      .set('Authorization', 'bearer '+ initialUserToken)
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -107,16 +132,35 @@ describe('post method', () => {
     }
     await api
       .post('/api/blogs')
+      .set('Authorization', 'bearer '+ initialUserToken)
       .send(newBlog)
       .expect(400)
     await api
       .post('/api/blogs')
+      .set('Authorization', 'bearer '+ initialUserToken)
       .send(blogWithBasicallyNothing)
       .expect(400)
     await api
       .post('/api/blogs')
+      .set('Authorization', 'bearer '+ initialUserToken)
       .send(blogWithMissingTitle)
       .expect(400)
+    const response = await api.get('/api/blogs')
+    expect(response.body).toHaveLength(initialBlogs.length)
+  })
+
+  test('Posting requires a valid auth token - 4.22', async () => {
+    const newBlog =  {
+      'title': 'Blog about coffee',
+      'author': 'Barista B',
+      'url': 'www.coffeeforlife.blog',
+      'likes': 5
+    }
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
     const response = await api.get('/api/blogs')
     expect(response.body).toHaveLength(initialBlogs.length)
   })
@@ -295,8 +339,6 @@ describe('when there is initially one user at db', () => {
     const usersAtEnd = await listHelper.usersInDb()
     expect(usersAtEnd).toHaveLength(usersAtStart.length)
   })
-
-
 
 })
 
