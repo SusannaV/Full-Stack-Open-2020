@@ -13,14 +13,6 @@ const listWithOneBlog = [
 
 const listWithMultipleBlogs = [
   {
-    _id: "5a422a851b54a676234d17f7",
-    title: "React patterns",
-    author: "Michael Chan",
-    url: "https://reactpatterns.com/",
-    likes: 7,
-    __v: 0
-  },
-  {
     _id: "5a422aa71b54a676234d17f8",
     title: "Go To Statement Considered Harmful",
     author: "Edsger W. Dijkstra",
@@ -28,6 +20,15 @@ const listWithMultipleBlogs = [
     likes: 5,
     __v: 0
   },
+  {
+    _id: "5a422a851b54a676234d17f7",
+    title: "React patterns",
+    author: "Michael Chan",
+    url: "https://reactpatterns.com/",
+    likes: 7,
+    __v: 0
+  },
+  
   {
     _id: "5a422b3a1b54a676234d17f9",
     title: "Canonical string reduction",
@@ -110,6 +111,24 @@ describe('favorite blog', () => {
       url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
       likes: 12,
       __v: 0
+    })
+  })
+
+})
+
+describe('most blogs', () => {
+  test('when list has only one blog equals that', () => {
+    const result = listHelper.mostBlogs(listWithOneBlog)
+    expect(result).toEqual({
+      author: "Edsger W. Dijkstra",
+      blogs: 1
+    })
+  })
+  test('of a bigger list of is calculated right', () => {
+    const result = listHelper.mostBlogs(listWithMultipleBlogs)
+    expect(result).toEqual({
+      author: "Robert C. Martin",
+      blogs: 3
     })
   })
 
