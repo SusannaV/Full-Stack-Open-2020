@@ -34,7 +34,6 @@ const mostBlogs = (blogs) => {
 
 const mostLikes = (blogs) => {
   const mappedList = blogs.map(blog => ({author: blog.author, likes: blog.likes}))
-   //console.log('mapped', mappedList)
    const sorted = _
    .chain(mappedList)
    .groupBy('author')
@@ -45,18 +44,6 @@ const mostLikes = (blogs) => {
 
     console.log('result ',result)
   return result
-  //  const result = mappedList.reduce((list, curr) => {
-  //     curr.author = list[curr.author] ? list[curr.likes] + curr.likes : 
-  //  }, {})
-
-  // const list = blogs.reduce((auth, curr)=>{
-  //   auth[curr.author] = auth[curr.author] ? auth[curr.author] + 1 : 1;
-  //   console.log('eka', auth[curr.author])
-  //   auth[curr.likes] = auth[curr.likes] ? auth[curr.likes] + curr.likes : 1;
-  //   console.log('toka', auth[curr.likes])
-  //   return auth
-  // }, {})
-  // console.log('Tässäpä tämä: ', list)
 }
 
 module.exports = {

@@ -2,9 +2,9 @@ POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-    "title": "Blog about coffee",
+    "title": "Blog about tea",
     "author": "Cappuchichino",
-    "url": "www.coffeeforlife.com",
-    "likes": 895
+    "url": "www.teaforlife.com",
+    "likes": 56
 
 }
