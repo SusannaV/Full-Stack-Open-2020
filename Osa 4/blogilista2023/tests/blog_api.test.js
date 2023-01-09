@@ -4,7 +4,6 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
-const { add } = require('lodash')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
@@ -67,6 +66,42 @@ test('if blog is not given a value for likes, it is 0', async () => {
   const addedBlog = response.body[helper.initialBlogs.length]
   expect(addedBlog.likes).toEqual(0)
 })
+
+//Tee testit blogin lisäämiselle eli osoitteeseen /api/blogs tapahtuvalle HTTP POST -pyynnölle.
+//Testin tulee varmistaa, että jos uusi blogi ei sisällä kenttiä title ja url,
+//pyyntöön vastataan statuskoodilla 400 Bad Request.
+
+test('a blog has to have a title and an url', async () => {
+  const blogWithoutTitle = {
+    author: 'Ghostwriter',
+    url: 'www.unnamedblog.com'
+  }
+
+  const blogWithoutUrl = {
+    title: 'Blog without an url',
+    author: 'Ghostwriter'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(blogWithoutTitle)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  await api
+    .post('/api/blogs')
+    .send(blogWithoutUrl)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(helper.initialBlogs.length)
+  const titles = response.body.map(r => r.title)
+  expect(titles).not.toContain('Blog without an url')
+  const urls = response.body.map(r => r.url)
+  expect(urls).not.toContain('www.unnamedblog.com')
+})
+
 
 afterAll(() => {
   mongoose.connection.close()
