@@ -4,6 +4,7 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
+const { add } = require('lodash')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
@@ -32,6 +33,7 @@ test('a blog can be added', async () => {
     title: 'New Blog',
     author: 'Ghostwriter',
     url: 'www.newblog.com',
+    likes: 5465465465465468
   }
 
   await api
@@ -46,6 +48,24 @@ test('a blog can be added', async () => {
   expect(contents).toContain(
     'New Blog'
   )
+})
+
+test('if blog is not given a value for likes, it is 0', async () => {
+  const newBlog = {
+    title: 'Unpopular blog',
+    author: 'Ghostwriter',
+    url: 'www.noonereadsme.com'
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  const addedBlog = response.body[helper.initialBlogs.length]
+  expect(addedBlog.likes).toEqual(0)
 })
 
 afterAll(() => {
