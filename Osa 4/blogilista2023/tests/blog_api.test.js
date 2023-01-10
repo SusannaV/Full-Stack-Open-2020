@@ -122,6 +122,51 @@ describe('DELETE method', () => {
   })
 })
 
+describe('PUT method', () => {
+  test('a blog can be modified', async () => {
+    const modifiedBlog = {
+      likes: 10005,
+    }
+    const blogs = await helper.blogsInDb()
+    const idOfBlogToModify = blogs[0].id
+    expect(blogs[0].likes).toEqual(5)
+    // title: 'Testblog',
+    // author: 'Ghostwriter',
+    // url: 'www.testblog.com',
+    // likes: 5
+
+    await api
+      .put(`/api/blogs/${idOfBlogToModify}`)
+      .send(modifiedBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogs2 = await helper.blogsInDb()
+    expect(blogs2[0].likes).toEqual(10005)
+  })
+
+  test('modification requires a number for like', async () => {
+    const modifiedBlog = {
+    }
+    const blogs = await helper.blogsInDb()
+    const idOfBlogToModify = blogs[0].id
+    expect(blogs[0].likes).toEqual(5)
+    // title: 'Testblog',
+    // author: 'Ghostwriter',
+    // url: 'www.testblog.com',
+    // likes: 5
+    console.log(blogs[0])
+    await api
+      .put(`/api/blogs/${idOfBlogToModify}`)
+      .send(modifiedBlog)
+      .expect(400)
+
+    const blogs2 = await helper.blogsInDb()
+    console.log(blogs2[0])
+    expect(blogs2[0].likes).toEqual(5)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
