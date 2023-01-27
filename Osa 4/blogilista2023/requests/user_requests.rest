@@ -1,0 +1,31 @@
+POST http://localhost:3003/api/users HTTP/1.1
+content-type: application/json
+
+{
+  "username": "kayttaja1",
+  "name": "Tämän käyttäjän salasana on salasana",
+  "password": "salasana"
+}
+
+###
+
+
+POST http://localhost:3003/api/login HTTP/1.1
+content-type: application/json
+
+{
+  "username": "kayttaja1",
+  "password": "salasana"
+}
+
+###
+POST http://localhost:3003/api/blogs HTTP/1.1
+content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtheXR0YWphMSIsImlkIjoiNjNkM2Y3NWU1M2Y5N2U4N2UxNzg0NDlmIiwiaWF0IjoxNjc0ODM2NTUxLCJleHAiOjE2NzQ4MzY1NjF9.7_O22FGtra_IarW5MZDaA1fRDeEEWIITjQ5vaGtSvCE
+
+{
+    "title": "Blog about tokens",
+    "author": "Cappuchichino",
+    "url": "www.tokens101.com",
+    "likes": 1
+}
