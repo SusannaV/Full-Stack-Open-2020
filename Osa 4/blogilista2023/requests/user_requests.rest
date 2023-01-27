@@ -33,7 +33,11 @@ content-type: application/json
 ###
 POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
+<<<<<<< HEAD
 Authorization: bearer 
+=======
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRva2EiLCJpZCI6IjYzYzY5NGM3ZDJmYjQ5ZTFiZWM5YmNiZCIsImlhdCI6MTY3NDgzNzA3MCwiZXhwIjoxNjc0ODQwNjcwfQ.woVcN61GG17XmV6FIKoubeclfQXLzMOrH-UTxlO2ks8
+>>>>>>> 4dbbb7bac3cc48be0443c68caee7929b15ffbade
 
 {
     "title": "Blog about tokens",
