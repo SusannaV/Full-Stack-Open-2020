@@ -3,6 +3,7 @@
 - npm install express
 - npm update
 - npm install --save-dev nodemon
+(-voi asentaa morganin)
 - npm install cors (onkohan tämä vielä edes tarpeellinen?)
 - npm install mongoose
 - yhdistetään mongoose, niin, että luodaan admin ja whitelistataan kaikki IPt
