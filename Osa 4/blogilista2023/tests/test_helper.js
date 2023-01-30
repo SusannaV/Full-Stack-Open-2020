@@ -6,13 +6,13 @@ const initialBlogs = [
     title: 'Testblog',
     author: 'Ghostwriter',
     url: 'www.testblog.com',
-    likes: 5
+    likes: 5,
   },
   {
     title: 'Blog for testers',
     author: 'Ghostwriter',
     url: 'www.testerlife.com',
-    likes: 72
+    likes: 72,
   },
 ]
 
@@ -26,14 +26,17 @@ const nonExistingId = async () => {
 
 const blogsInDb = async () => {
   const blogs = await Blog.find({})
-  return blogs.map(blog => blog.toJSON())
+  return blogs.map((blog) => blog.toJSON())
 }
 
 const usersInDb = async () => {
   const users = await User.find({})
-  return users.map(u => u.toJSON())
+  return users.map((u) => u.toJSON())
 }
 
 module.exports = {
-  initialBlogs, nonExistingId, blogsInDb, usersInDb
+  initialBlogs,
+  nonExistingId,
+  blogsInDb,
+  usersInDb,
 }

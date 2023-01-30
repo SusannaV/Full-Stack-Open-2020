@@ -7,9 +7,35 @@ const Blog = require('../models/blog')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')
 
+let initialUserToken = null
+
 beforeEach(async () => {
+  await User.deleteMany({})
+  const passwordHash = await bcrypt.hash('hullunsalainensalasana', 10)
+  const initialUser = new User(
+    {
+      username: 'AkuA',
+      passwordHash: passwordHash
+    })
+  await initialUser.save()
+
+  const response = await api
+    .post('/api/login/')
+    .send({
+      username: 'AkuA',
+      password: 'hullunsalainensalasana'
+    })
+
+  initialUserToken = response.body.token
+
   await Blog.deleteMany({})
-  await Blog.insertMany(helper.initialBlogs)
+  let blogObject = new Blog(helper.initialBlogs[0])
+  const user = await User.findOne()
+  blogObject.user = user._id
+  await blogObject.save()
+  blogObject = new Blog(helper.initialBlogs[1])
+  blogObject.user = user._id
+  await blogObject.save()
 })
 
 describe('GET blogs', () => {
@@ -18,7 +44,6 @@ describe('GET blogs', () => {
       .get('/api/blogs')
       .expect(200)
       .expect('Content-Type', /application\/json/)
-
     expect(response.body).toHaveLength(2)
   })
 
@@ -42,6 +67,7 @@ describe('POST method', () => {
 
     await api
       .post('/api/blogs')
+      .set({ 'Authorization': `bearer ${initialUserToken}` })
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -61,6 +87,7 @@ describe('POST method', () => {
 
     await api
       .post('/api/blogs')
+      .set({ 'Authorization': `bearer ${initialUserToken}` })
       .send(newBlog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -100,6 +127,26 @@ describe('POST method', () => {
     const urls = blogs.map((r) => r.url)
     expect(urls).not.toContain('www.unnamedblog.com')
   })
+
+  test('creation failes if a proper token is not provided plunk', async () => {
+    const newBlog = {
+      title: 'New Blog',
+      author: 'Ghostwriter',
+      url: 'www.newblog.com',
+      likes: 5465465465465468,
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+
+    const blogs = await helper.blogsInDb()
+    const contents = blogs.map((r) => r.title)
+    expect(blogs).toHaveLength(helper.initialBlogs.length)
+    expect(contents).not.toContain('New Blog')
+  })
 })
 
 describe('DELETE method', () => {
@@ -108,7 +155,10 @@ describe('DELETE method', () => {
     const blogToDelete = blogsAtStart[0]
     const contents = blogsAtStart.map((r) => r.title)
     expect(contents).toContain('Testblog')
-    await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204)
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .set({ 'Authorization': `bearer ${initialUserToken}` })
+      .expect(204)
     const blogsAtEnd = await helper.blogsInDb()
     const newContents = blogsAtEnd.map((r) => r.title)
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
@@ -150,18 +200,12 @@ describe('PUT method', () => {
     const blogs = await helper.blogsInDb()
     const idOfBlogToModify = blogs[0].id
     expect(blogs[0].likes).toEqual(5)
-    // title: 'Testblog',
-    // author: 'Ghostwriter',
-    // url: 'www.testblog.com',
-    // likes: 5
-    console.log(blogs[0])
     await api
       .put(`/api/blogs/${idOfBlogToModify}`)
       .send(modifiedBlog)
       .expect(400)
 
     const blogs2 = await helper.blogsInDb()
-    console.log(blogs2[0])
     expect(blogs2[0].likes).toEqual(5)
   })
 })
@@ -253,7 +297,7 @@ describe('when there is initially one user at db', () => {
 
     const newUserWithoutPassword = {
       name: 'Superuser3',
-      username: 'root3'
+      username: 'root3',
     }
 
     const result3 = await api

@@ -2,16 +2,17 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const middleware = require('../utils/middleware')
 
-console.log('jep')
-
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1, id:1 })
   response.json(blogs)
 })
 
-blogsRouter.post('/',  middleware.userExtractor, async (request, response) => {
+blogsRouter.post('/', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
   const body = request.body
   const user = request.user
+  if(!user){
+    response.status(401).end()
+  }
 
   const blog = new Blog({
     title: body.title,
@@ -43,7 +44,7 @@ blogsRouter.put('/:id', async (request, response) => {
 
 })
 
-blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
+blogsRouter.delete('/:id', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
   const blog = await Blog.findById(request.params.id)
   if(!blog){
     response.status(404).end()

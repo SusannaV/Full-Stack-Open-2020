@@ -34,6 +34,11 @@ const errorHandler = (error, request, response, next) => {
 
 const tokenExtractor = (request, response, next) => {
   const authorization = request.get('authorization')
+  if(!authorization){
+    response.status(401).json({
+      error: 'token required',
+    })
+  }
   if (authorization && authorization.startsWith('bearer ')) {
     request.token=authorization.replace('bearer ', '')
   }

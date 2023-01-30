@@ -41,8 +41,6 @@ const mostLikes = (blogs) => {
     .value()
 
   const result = _.maxBy(sorted, 'likes')
-
-  console.log('result ',result)
   return result
 }
 
