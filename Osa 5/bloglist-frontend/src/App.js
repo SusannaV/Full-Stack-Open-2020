@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import './index.css'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -11,6 +12,7 @@ const App = () => {
   const [title, setTitle] = useState('') 
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('') 
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -27,6 +29,25 @@ const App = () => {
     }
   }, [])
 
+  const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+  if(message.includes('successfully')){
+    return (
+    <div className="success">
+    {message}
+  </div>)
+  }
+  else {
+    return (
+      <div className="error">
+      {message}
+      </div>
+      )
+  }
+}
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -42,10 +63,10 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       console.log('wrong credentials')
-      // setErrorMessage('wrong credentials')
-      // setTimeout(() => {
-      //   setErrorMessage(null)
-      // }, 5000)
+      setErrorMessage('Wrong username or password')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -58,20 +79,26 @@ const App = () => {
       url:url
     } 
     try {
-      console.log('You are at line 61, at file App.js')
-      console.log('user', user)
       const savedBlog = await blogService.create(newBlog)
         setBlogs(blogs.concat(savedBlog))
         setAuthor('')
         setTitle('')
         setUrl('')
+        setErrorMessage(
+          `A new blog ${title} by ${author} was added successfully!`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
     } catch (exception) {
       console.log('error creating a new blog')
       console.log(exception)
-      // setErrorMessage('wrong credentials')
-      // setTimeout(() => {
-      //   setErrorMessage(null)
-      // }, 5000)
+      setErrorMessage(
+        `The blog could not be added!`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -144,6 +171,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification message={errorMessage} />
        {loginForm()}
       </div>
     )
@@ -153,6 +181,7 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       <p>{user.name} logged in. <button onClick={handleLogOut}>Log out</button> </p>
+      <Notification message={errorMessage} />
       {newBlogForm()}
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
