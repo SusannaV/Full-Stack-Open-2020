@@ -73,7 +73,6 @@ const App = () => {
   }
 
   const addBlog = async (blogObject) => {
-    blogFormRef.current.toggleVisibility()
     try {
       const savedBlog = await blogService.create(blogObject)
         setBlogs(blogs.concat(savedBlog))
@@ -93,6 +92,7 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
+    blogFormRef.current.toggleVisibility()
   }
 
 

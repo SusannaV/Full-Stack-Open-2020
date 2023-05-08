@@ -28,3 +28,16 @@ body{
 button{
   margin: 5px 0 5px 0
 }
+
+.blog{
+  border: solid black 2px;
+  width: fit-content;
+  min-width: 350px;
+  border-radius: 8px;
+  padding: 2px;
+  margin: 4px
+}
+
+.blog button{
+  margin: 0 0 0 5px
+}
