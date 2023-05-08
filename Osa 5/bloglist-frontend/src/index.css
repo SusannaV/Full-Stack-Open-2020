@@ -19,3 +19,12 @@
   margin-bottom: 10px;
   width: fit-content;
 }
+
+body{
+  background-color: rgb(177, 225, 228);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button{
+  margin: 5px 0 5px 0
+}
