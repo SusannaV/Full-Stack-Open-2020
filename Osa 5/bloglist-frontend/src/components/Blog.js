@@ -2,7 +2,7 @@ import { useState } from 'react';
 import blogService from '../services/blogs'
 
 
-const Blog = ({blog}) => {
+const Blog = ({blog, updater}) => {
 const [showDetails, setShowDetailsMore] = useState(false)
 const [updatedLikes, setUpdatedLikes] = useState(false)
 
@@ -14,12 +14,13 @@ const addLikes = (event) => {
   event.preventDefault()
   blogService.addLikes(blog)
   setUpdatedLikes(!updatedLikes)
+  updater()
 }
 
 if (!showDetails){
 return (
   <div className='blog'>
-    {blog.title} by {blog.author}
+    {blog.title} by {blog.author} {blog.likes}
     <button onClick={toggleDetails}>View</button>
   </div>  
 )} else {

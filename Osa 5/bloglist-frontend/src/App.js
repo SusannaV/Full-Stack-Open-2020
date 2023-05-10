@@ -31,6 +31,8 @@ const App = () => {
     }
   }, [])
 
+ 
+
   const Notification = ({ message }) => {
   if (message === null) {
     return null
@@ -49,6 +51,11 @@ const App = () => {
       )
   }
 }
+
+  const reFetchBlogs = () => {
+  blogService.getAll().then(blogs =>
+    setBlogs( blogs ))
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -130,8 +137,8 @@ const App = () => {
       <NewBlogForm 
         createBlog ={addBlog} />
         </Togglable>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.sort((a,b)=>b.likes-a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} updater={reFetchBlogs}/>
       )}
     </div>
   )
