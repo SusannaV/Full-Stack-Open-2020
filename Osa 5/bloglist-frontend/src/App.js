@@ -9,8 +9,8 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
 
@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -31,32 +31,31 @@ const App = () => {
     }
   }, [])
 
- 
 
   const Notification = ({ message }) => {
-  if (message === null) {
-    return null
-  }
-  if(message.includes('successfully')){
-    return (
-    <div className="success">
-    {message}
-  </div>)
-  }
-  else {
-    return (
-      <div className="error">
-      {message}
-      </div>
+    if (message === null) {
+      return null
+    }
+    if(message.includes('successfully')){
+      return (
+        <div className="success">
+          {message}
+        </div>)
+    }
+    else {
+      return (
+        <div className="error">
+          {message}
+        </div>
       )
+    }
   }
-}
 
   const reFetchBlogs = () => {
-  blogService.getAll()
-  .then(blogs =>
-    setBlogs( blogs )
-    ) 
+    blogService.getAll()
+      .then(blogs =>
+        setBlogs( blogs )
+      )
   }
 
   const handleLogin = async (event) => {
@@ -67,7 +66,7 @@ const App = () => {
       })
       window.localStorage.setItem(
         'loggedBloglistUser', JSON.stringify(user)
-      ) 
+      )
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -84,18 +83,18 @@ const App = () => {
   const addBlog = async (blogObject) => {
     try {
       const savedBlog = await blogService.create(blogObject)
-        setBlogs(blogs.concat(savedBlog))
-        setErrorMessage(
-          `A new blog ${blogObject.title} by ${blogObject.author} was added successfully!`
-        )
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+      setBlogs(blogs.concat(savedBlog))
+      setErrorMessage(
+        `A new blog ${blogObject.title} by ${blogObject.author} was added successfully!`
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     } catch (exception) {
       console.log('error creating a new blog')
       console.log(exception)
       setErrorMessage(
-        `The blog could not be added!`
+        'The blog could not be added!'
       )
       setTimeout(() => {
         setErrorMessage(null)
@@ -109,7 +108,7 @@ const App = () => {
   const handleLogOut = (event) => {
     event.preventDefault()
     window.localStorage.removeItem('loggedBloglistUser')
-    setUser(null)    
+    setUser(null)
   }
 
   if (user === null) {
@@ -118,14 +117,14 @@ const App = () => {
         <h2>Log in to application</h2>
         <Notification message={errorMessage} />
         <Togglable buttonLabel="Log in here">
-        <LoginForm
+          <LoginForm
             username={username}
             password={password}
             handleUsernameChange={({ target }) => setUsername(target.value)}
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
           />
-          </Togglable>
+        </Togglable>
       </div>
     )
   }
@@ -136,10 +135,10 @@ const App = () => {
       <p>{user.name} logged in. <button onClick={handleLogOut}>Log out</button> </p>
       <Notification message={errorMessage} />
       <Togglable buttonLabel='Add a new blog' ref={blogFormRef}>
-      <NewBlogForm 
-        createBlog ={addBlog} />
-        </Togglable>
-      {blogs.sort((a,b)=>b.likes-a.likes).map(blog =>
+        <NewBlogForm
+          createBlog ={addBlog} />
+      </Togglable>
+      {blogs.sort((a,b) => b.likes-a.likes).map(blog =>
         <Blog key={blog.id} blog={blog} updater={reFetchBlogs} currentUser={user}/>
       )}
     </div>

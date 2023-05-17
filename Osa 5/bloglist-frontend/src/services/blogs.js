@@ -40,10 +40,4 @@ const deleteBlog = async (blog) => {
   return response.data
 }
 
-
-//Katso ChatGPT:n ehdotus refaktoroimiseksi, sillä sivu ei nyt päivity, kun blogi poistetaan
-
-
-
-// eslint-disable-next-line import/no-anonymous-default-export
 export default { getAll, create, setToken, addLikes, deleteBlog }

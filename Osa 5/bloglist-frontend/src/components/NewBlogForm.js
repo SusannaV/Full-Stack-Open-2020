@@ -1,10 +1,11 @@
-import {useState} from 'react';
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 
-const NewBlogForm = ({createBlog}) =>{ 
-  const [title, setTitle] = useState('') 
+const NewBlogForm = ({ createBlog }) => {
+  const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('') 
+  const [url, setUrl] = useState('')
 
   const addBlog = (event) => {
     event.preventDefault()
@@ -17,38 +18,42 @@ const NewBlogForm = ({createBlog}) =>{
     setTitle('')
     setUrl('')
   }
-return  (
-  <form onSubmit={addBlog}>
-    <h2>Create a new blog</h2>
-    <div>
+  return  (
+    <form onSubmit={addBlog}>
+      <h2>Create a new blog</h2>
+      <div>
       Title:
         <input
-        type="text"
-        value={title}
-        name="Title"
-        onChange={event => setTitle(event.target.value)}
-      />
-    </div>
-    <div>
+          type="text"
+          value={title}
+          name="Title"
+          onChange={event => setTitle(event.target.value)}
+        />
+      </div>
+      <div>
       Author:
         <input
-        type="text"
-        value={author}
-        name="Author"
-        onChange={event => setAuthor(event.target.value)}
-      />
-    </div>
-    <div>
+          type="text"
+          value={author}
+          name="Author"
+          onChange={event => setAuthor(event.target.value)}
+        />
+      </div>
+      <div>
       URL:
         <input
-        type="text"
-        value={url}
-        name="Url"
-        onChange={event => setUrl(event.target.value)}
-      />
-    </div>
-    <button type="submit">Create a new blog</button>
-  </form> 
-)}
+          type="text"
+          value={url}
+          name="Url"
+          onChange={event => setUrl(event.target.value)}
+        />
+      </div>
+      <button type="submit">Create a new blog</button>
+    </form>
+  )}
 
-export default NewBlogForm;
+NewBlogForm.propTypes = {
+  createBlog: PropTypes.func.isRequired
+}
+
+export default NewBlogForm
