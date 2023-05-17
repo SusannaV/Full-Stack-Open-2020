@@ -31,5 +31,19 @@ const addLikes = async blog => {
   return response.data
 }
 
+const deleteBlog = async (blog) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const blogUrl = baseUrl+`/${blog.id}`
+  const response = await axios.delete(blogUrl, config)
+  return response.data
+}
+
+
+//Katso ChatGPT:n ehdotus refaktoroimiseksi, sillä sivu ei nyt päivity, kun blogi poistetaan
+
+
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, create, setToken, addLikes }
+export default { getAll, create, setToken, addLikes, deleteBlog }

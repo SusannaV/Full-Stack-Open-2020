@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import blogService from '../services/blogs'
 
-
-const Blog = ({blog, updater}) => {
+const Blog = ({blog, updater, currentUser}) => {
 const [showDetails, setShowDetailsMore] = useState(false)
 const [updatedLikes, setUpdatedLikes] = useState(false)
 
@@ -17,21 +16,35 @@ const addLikes = (event) => {
   updater()
 }
 
+const deleteBlog = (event) => {
+  event.preventDefault()
+  if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}?`)){
+    blogService.deleteBlog(blog)
+    .then(response => {
+      updater()
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+}
+
 if (!showDetails){
 return (
   <div className='blog'>
-    {blog.title} by {blog.author} {blog.likes}
-    <button onClick={toggleDetails}>View</button>
+    {blog.title} by {blog.author} {blog.user.name}
+    <button onClick={toggleDetails}>View details</button>
   </div>  
 )} else {
   return (
     <div className='blog'>
-      Title: {blog.title} <br/>
+      Title: {blog.title}  <button onClick={toggleDetails}>Hide details</button><br/>
       Author: {blog.author}<br/>
       Url: {blog.url}<br/>
       Likes: {blog.likes} <button onClick={addLikes}>Like</button><br/> 
       Added by: {blog.user.name}
-      <button onClick={toggleDetails}>Hide</button>
+      {currentUser.id === blog.user.id && <button onClick={deleteBlog}>Remove</button>}
+      
     </div>  
   )
 }}
