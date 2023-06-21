@@ -52,8 +52,8 @@ const Blog = ({ blog, updater, currentUser }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  updater: PropTypes.func.isRequired,
-  currentUser: PropTypes.object.isRequired
+  // updater: PropTypes.func.isRequired,
+  // currentUser: PropTypes.object.isRequired
 }
 
 export default Blog
