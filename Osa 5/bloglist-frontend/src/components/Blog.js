@@ -34,7 +34,7 @@ const Blog = ({ blog, updater, currentUser }) => {
     return (
       <div className='blog'>
         {blog.title} by {blog.author} {blog.user.name}
-        <button onClick={toggleDetails}>View details</button>
+        <button onClick={toggleDetails} data-testid='details-button'>View details</button>
       </div>
     )} else {
     return (
@@ -52,8 +52,8 @@ const Blog = ({ blog, updater, currentUser }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  // updater: PropTypes.func.isRequired,
-  // currentUser: PropTypes.object.isRequired
+  updater: PropTypes.func.isRequired,
+  currentUser: PropTypes.object.isRequired
 }
 
 export default Blog
