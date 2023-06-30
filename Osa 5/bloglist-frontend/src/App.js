@@ -82,6 +82,7 @@ const App = () => {
   }
 
   const addBlog = async (blogObject) => {
+    console.log('Tämä on blogObject',blogObject)
     try {
       const savedBlog = await blogService.create(blogObject)
       setBlogs(blogs.concat(savedBlog))
@@ -102,6 +103,17 @@ const App = () => {
       }, 5000)
     }
     blogFormRef.current.toggleVisibility()
+  }
+
+  const addLikes = async (blog) => {
+    try{
+      await blogService.addLikes(blog)
+      reFetchBlogs()
+    }
+    catch (exception) {
+      console.log('error adding likes')
+      console.log(exception)
+    }
   }
 
 
@@ -140,7 +152,7 @@ const App = () => {
           createBlog ={addBlog} />
       </Togglable>
       {blogs.sort((a,b) => b.likes-a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} updater={reFetchBlogs} currentUser={user}/>
+        <Blog key={blog.id} blog={blog} updater={reFetchBlogs} addLikes={addLikes} currentUser={user}/>
       )}
     </div>
   )

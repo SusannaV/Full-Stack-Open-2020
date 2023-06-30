@@ -2,19 +2,16 @@ import { useState } from 'react'
 import blogService from '../services/blogs'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, updater, currentUser }) => {
+const Blog = ({ blog, updater, addLikes, currentUser }) => {
   const [showDetails, setShowDetailsMore] = useState(false)
-  const [updatedLikes, setUpdatedLikes] = useState(false)
 
   const toggleDetails = () => {
     setShowDetailsMore(!showDetails)
   }
 
-  const addLikes = (event) => {
+  const addLikesToBLog = (event) => {
     event.preventDefault()
-    blogService.addLikes(blog)
-    setUpdatedLikes(!updatedLikes)
-    updater()
+    addLikes(blog)
   }
 
   const deleteBlog = (event) => {
@@ -42,7 +39,7 @@ const Blog = ({ blog, updater, currentUser }) => {
       Title: {blog.title}  <button onClick={toggleDetails}>Hide details</button><br/>
       Author: {blog.author}<br/>
       Url: {blog.url}<br/>
-      Likes: {blog.likes} <button onClick={addLikes}>Like</button><br/>
+      Likes: {blog.likes} <button onClick={addLikesToBLog} data-testid='like-button'>Like</button><br/>
       Added by: {blog.user.name}
         {currentUser.id === blog.user.id && <button onClick={deleteBlog}>Remove</button>}
 

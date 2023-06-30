@@ -24,12 +24,17 @@ describe('Rendering blogs', () => {
     name: 'Tämän käyttäjän salasana on salasana',
     id: '63d3f75e53f97e87e178449f' }
 
+
+  const mockAddLikes = jest.fn()
+
+
   beforeEach(() => {
     container = render(
       <Blog
         blog={blog}
         updater={jest.fn()}
         currentUser={currenUser}
+        addLikes={mockAddLikes}
       />
     ).container
   })
@@ -51,17 +56,26 @@ describe('Rendering blogs', () => {
     const button = screen.getByTestId('details-button')
     await user.click(button)
 
-    // Assert that the details are displayed
     const detailsElement = screen.getByText('Title:', { exact: false })
     expect(detailsElement).toBeInTheDocument()
 
     const blogElement = screen.getByText('Added by', { exact: false })
     expect(blogElement).toBeDefined()
 
-    // Assert that hide-button is displayed
     const hideButton = screen.getByText('Hide details')
     expect(hideButton).toBeInTheDocument()
     expect(button).not.toBeInTheDocument()
   })
 
+  test('clicking the like button adds calls to mockAddLikes-function', async () => {
+    const user = userEvent.setup()
+    const detailsButton = screen.getByTestId('details-button')
+    await user.click(detailsButton)
+
+    const likeButton = screen.getByTestId('like-button')
+    await user.click(likeButton)
+    await user.click(likeButton)
+
+    expect(mockAddLikes.mock.calls).toHaveLength(2)
+  })
 })
